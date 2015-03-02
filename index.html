@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Drupal Commerce 2.x</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/league.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+                <section>
+                    <h1>Drupal Commerce 2.x</h1>
+                    <h2>Drupal Camp London 2015</h2>
+                    <p>
+                        <small>
+                            Presented by David Kitchen / <a href="http://twitter.com/dwkitchen">@dwkitchen</a>
+                        </small>
+                    </p>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Introductions</h2>
+                    </section>
+
+                    <section>
+                        <h3>David Kitchen</h3>
+                        <img src="assets/images/dwkitchen.jpg" class="stretch" />
+                        <p>Technical Lead for Commerce Guys UK<br />
+                            Tax specialist and Commerce Contributor</p>
+                    </section>
+
+                    <section>
+                        <h3>Drupal Commerce 2.x co-maintainers</h3>
+                        <img src="assets/images/bojanryan.jpg" class="stretch" />
+                        <p>Bojan Zivanovic (bojanz) <br />
+                            and Ryan Szrama (rszrama)</p>
+                    </section>
+
+                    <section>
+                        <a href="http://www.drupalcommerce.org">
+                            <img src="assets/images/dc.png" style="border: 0; padding: 15px;" />
+                        </a>
+                        <p>Our vision is for Drupal Commerce to be the number one<br />open source e-commerce platform in the world...</p>
+                        <p class="fragment" style="margin-top: 1em;">Powering <em>truly</em> flexible e-commerce.</p>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <img src="assets/images/dc.png" style="border: 0; padding: 15px;"  />
+                        <h2>Drupal Commerce 1.x</h2>
+                        <p>A brief history.</p>
+                    </section>
+                    <section>
+                        <h3>Built from scratch on Drupal 7</h3>
+                    </section>
+                    <section>
+                        <h3>Minimalistic and flexible</h3>
+                    </section>
+                    <section>
+                        <h3>Uses Views for all listings</h3>
+                    </section>
+                    <section >
+                        <h3>Uses Rules for business logic</h3>
+                    </section>
+                    <section>
+                        <h3>Relies on "essential contribs" and distributions to complete the experience</h3>
+                    </section>
+                    <section>
+                        <h3>We're doing something right...</h3>
+                        <img src="assets/images/usage-stats.png" />
+                    </section>
+
+                </section>
+
+                <section>
+                    <section>
+                        <img src="assets/images/symfony_white_01.svg" style="border: 0; padding: 15px;"  />
+                        <h2>Symfony PHP Libraries</h2>
+                    </section>
+
+                    <section>
+                        <h3>We* started with research</h3>
+
+                        <p><small>*Led by Bojan Zivanovic.</small></p>
+
+                        <ul>
+                            <li>Define the deficiencies in our own software</li>
+                            <li>Existing */money libraries</li>
+                            <li>Sonata / Sylius e-commerce bundles</li>
+                            <li>Non-Symfony PHP applications</li>
+                            <li>Non-PHP applications</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>Identifying our Weaknesses</h3>
+
+                        <ul>
+                            <li>Age old tax management issues</li>
+                            <li>Incomplete price management API</li>
+                            <li>Incomplete currency formatting rules</li>
+                            <li>Address implementation stretched to the limit</li>
+                            <li>Limited ability to collaborate outside of Drupal</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>Proposing Standalone Solutions</h3>
+
+                        <ul>
+                            <li>Internationalization (esp. currency formatting)</li>
+                            <li>Address formatting / validation</li>
+                            <li>Territory grouping (to support taxing)</li>
+                            <li>Tax rate management (at least for VAT)</li>
+                            <li>Price calculation and manipulation</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        Not just interfaces / classes but <em>also</em> unprecedented data.
+                    </section>
+
+                    <section>
+                        Minimal dependencies.
+
+                        <aside class="notes">
+                            Not Symfony bundles.
+                        </aside>
+                    </section>
+
+                    <section>
+                        Simple APIs with clear documentation and examples.
+                    </section>
+
+                    <section>
+                        Full test coverage.
+                    </section>
+
+                    <section>
+                        Reusable by any PHP based e-commerce application.
+                    </section>
+
+                    <!-- commerceguys/intl -->
+                    <section>
+                        <h3><a href="https://github.com/commerceguys/intl" >intl</a></h3>
+                        <ul>
+                            <li>Number Formatter, inspired by intl.</li>
+                            <li>Currencies</li>
+                            <li>Countries</li>
+                            <li>Languages</li>
+                        </ul>
+                        <h4>Coming soon</h4>
+                        <ul>
+                            <li>Date Formatting</li>
+                        </ul>
+                        <p><a href="https://drupalcommerce.org/blog/15916/commerce-2x-stories-internationalization">Drupal Commerce blog.</a></p>
+
+                        <aside class="notes">
+                            The data used comes from the CLDR project.
+                            <br />
+                            There are three parts to the library:
+                            <ul>
+                                <li>The list of countries, currencies, languages (now also present in symfony/intl)
+                                <li>Number formatting data (how does each of the 250 locales represent numbers)
+                                <li>The NumberFormatter (made so we can avoid the intl extension)
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h4>Currency handling</h4>
+                        <p>$ &cent &pound p &yen &#8356; &#8359; &euro; &#x20B9; &#x20a9; &#x20b4; &#x20af; &#x20ae; &#x20b2; &#x20b3; &#x20b5; &#x20ad; &#x20aa; &#x20ab;</p>
+                    </section>
+
+                    <section>
+                        <h4>Currency formatting</h4>
+                        <p class="fragment">€12,345.99</p>
+                        <p class="fragment">12 345,99 €</p>
+                        <p class="fragment">12.345,99 €</p>
+                        <p class="fragment">د.إ.‏ ٩٩٩٫٩٩</p>
+                    </section>
+
+                    <!-- commerceguys/pricing -->
+                    <section>
+                        <h3><a href="https://github.com/commerceguys/pricing">pricing</a></h3>
+                        <p>A price is a value object. Each operation (add, subtract, multiply, divide, round) produces a new price instance. All amounts are passed as strings, and manipulated using bcmath.</p>
+                    </section>
+
+                    <section>
+                        <h4>Creating prices</h4>
+                        <pre><code>
+use CommerceGuys\Intl\Currency\CurrencyRepository;
+use CommerceGuys\Pricing\Price;
+
+$currencyRepository = new CurrencyRepository;
+$currency = $currencyRepository->get('EUR');
+
+$firstPrice  = new Price('99.99', $currency);
+$secondPrice = new Price('100', $currency);
+$thirdPrice  = new Price('20.307', $currency);
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h4>Price operations</h4>
+                        <pre><code>
+// Every operation produces a new Price instance.
+$total = $firstPrice
+->add($secondPrice)
+->subtract($thirdPrice)
+->multiply('4')
+->divide('2');
+echo $total; // 359.366  EUR
+echo $total->round(); // 359.37  EUR
+echo $total->round(Price::ROUND_HALF_UP, 1); // 359.4 EUR
+echo $total->greaterThan($firstPrice); // true
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h4>Currency Conversion</h4>
+                        <pre><code>
+use CommerceGuys\Intl\Currency\CurrencyRepository;
+use CommerceGuys\Pricing\Price;
+
+$currencyRepository = new CurrencyRepository;
+$eur = $currencyRepository->get('EUR');
+$usd = $currencyRepository->get('USD');
+
+// Use an external library to get an actual exchange rate.
+$rate = 1;
+$eurPrice = new Price('100', $eur);
+$usdPrice = $eurPrice->convert($usd, $rate);
+echo $usdPrice;
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h4>Currency Formatting</h4>
+                        <pre><code>
+use CommerceGuys\Intl\Currency\CurrencyRepository;
+use CommerceGuys\Intl\NumberFormat\NumberFormatRepository;
+use CommerceGuys\Intl\Formatter\NumberFormatter;
+use CommerceGuys\Pricing\Price;
+
+$currencyRepository = new CurrencyRepository;
+$currency = $currencyRepository->get('USD');
+$price = new Price('99.99', $currency);
+
+$numberFormatRepository = new NumberFormatRepository;
+$numberFormat = $numberFormatRepository->get('en-US');
+
+$currencyFormatter = new NumberFormatter($numberFormat, NumberFormatter::CURRENCY);
+echo $currencyFormatter->formatCurrency($price->getAmount(), $price->getCurrency());
+                        </code></pre>
+                    </section>
+
+                    <!-- commerceguys/addressing -->
+                    <section>
+                        <h3><a href="https://github.com/commerceguys/addressing">addressing</a></h3>
+                        <ul>
+                            <li>Address formats for 200 countries</li>
+                            <li>Subdivisions (administrative areas, localities, dependent localities) for 40 countries</li>
+                            <li>Subdivision translations for all of the parent country's (i.e Canada, Switzerland) official languages.</li>
+                            <li>Validation (via Symfony Validator)</li>
+                            <li>Form generation (via Symfony Form)</li>
+                            <li>Postal formatting</li>
+                        </ul>
+
+                        <p><a href="https://drupalcommerce.org/blog/16864/commerce-2x-stories-addressing">Featured on the Drupal Commerce blog.</a></p>
+
+                        <aside class="notes">
+                            The data set allows us to load the address format for the selected country, use it to validate the address object, or generate the address form, or format an address for postal purposes.
+                            We're the first ones to use this dataset outside of Google.
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h4>Address Data</h4>
+                        <pre><code>
+use CommerceGuys\Addressing\Repository\AddressFormatRepository;
+use CommerceGuys\Addressing\Repository\SubdivisionRepository;
+
+$addressFormatRepository = new AddressFormatRepository();
+$subdivisionRepository = new SubdivisionRepository();
+
+// Get the address format for Canada.
+$addressFormat = $addressFormatRepository->get('CA');
+
+// Get the subdivisions for Canada, in French.
+$states = $subdivisionRepository->getAll('CA', 0, 'fr');
+foreach ($states as $state) {
+    echo $state->getName();
+}
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <h4>What fields?</h4>
+                        <img src="assets/images/amazon_us.jpg" style="border: 0; padding: 15px;"  />
+                    </section>
+
+                    <section>
+                        <h4>Somewhere else</h4>
+                        <img src="assets/images/amazon_jp.jpg" style="border: 0; padding: 15px;"  />
+                    </section>
+
+                    <section>
+                        <h4>Address format</h4>
+                        <ul>
+                            <li>Which fields are used, and in which order</li>
+                            <li>Which fields are required</li>
+                            <li>Which fields need to be uppercased</li>
+                            <li>Field labels</li>
+                            <li>Regular expression for validating postal codes</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h4>Address Formatting</h4>
+                            <pre><code>
+use CommerceGuys\Addressing\Formatter\PostalFormatter;
+use CommerceGuys\Addressing\Provider\DataProvider;
+
+$dataProvider = new DataProvider();
+$formatter = new PostalFormatter($dataProvider);
+
+// Format an address for sending from Switzerland, in French.
+// If the address destination is not Switzerland, the country name will be
+// appended in French, uppercase.
+echo $formatter->format($address, 'CH', 'fr');
+                            </code></pre>
+                    </section>
+
+                    <!-- commerceguys/zone -->
+                    <section>
+                        <h3><a href="https://github.com/commerceguys/zone" >zone</a></h3>
+                        <p>Zones are territorial groupings mostly used for shipping or tax purposes. For example, a set of shipping rates associated with a zone where the rates become available only if the customer's address matches the zone.</p>
+                        <p>A zone can match other zones, countries, subdivisions (states/provinces/municipalities), postal codes. Postal codes can also be expressed using ranges or regular expressions.</p>
+                        <aside class="notes">
+                            Used for shipping, taxes; EU (list of 28 countries), etc.
+                        </aside>
+                    </section>
+
+                    <section>
+                        <p>Create the German VAT zone</p>
+                        <pre><code>
+use CommerceGuys\Addressing\Model\Address;
+use CommerceGuys\Zone\Model\Zone;
+use CommerceGuys\Zone\Model\ZoneMemberCountry;
+
+$zone = new Zone();
+$zone->setId('german_vat');
+$zone->setName('German VAT');
+$zone->setScope('tax');
+                        </code></pre>
+                    </section>
+                    <section>
+                        <p>Add Germany to the zone,</p>
+                        <pre><code>
+$germanyZoneMember = new ZoneMemberCountry();
+$germanyZoneMember->setCountryCode('DE');
+$zone->addMember($germanyZoneMember);
+                        </code></pre>
+                        <p class="fragment">add the 4 Austrian postal codes that are in Germany for VAT.</p>
+                        <pre class="fragment"><code>
+$austriaZoneMember = new ZoneMemberCountry();
+$austriaZoneMember->setCountryCode('AT');
+$austriaZoneMember->setIncludedPostalCodes('6691, 6991:6993');
+$zone->addMember($austriaZoneMember);
+                        </code></pre>
+                    </section>
+
+                    <section>
+                        <p>Initialising a zone matcher.</p>
+                        <pre><code>
+use CommerceGuys\Addressing\Model\Address;
+use CommerceGuys\Zone\Matcher\ZoneMatcher;
+use CommerceGuys\Zone\Repository\ZoneRepository;
+
+$repository = new ZoneRepository('resources/zone');
+$matcher = new ZoneMatcher($repository);
+                        </code></pre>
+                    </section>
+                    <section>
+                        <p>Create an address.</p>
+                        <pre><code>
+$austrianAddress = new Address();
+$austrianAddress->setCountryCode('AT');
+$austrianAddress->setPostalCode('6692');
+                        </code></pre>
+                        <p class="fragment">Get the matching tax zones.</p>
+                        <pre class="fragment"><code>
+$zones = $matcher->matchAll($austrianAddress, 'tax');
+                        </code></pre>
+                        <p class="fragment">Is in Germany for VAT.</p>
+                    </section>
+
+                    <!-- commerceguys/tax -->
+                    <section>
+                        <h3><a href="https://github.com/commerceguys/tax">tax</a></h3>
+                        <ul>
+                            <li class="fragment">Smart data model designed for fluctuating tax rate amounts ("19% -> 21% on January 1st").</li>
+                            <li class="fragment">Predefined tax rates and zones for EU countries, Iceland, Norway, South Africa and Switzerland. More to come.</li>
+                            <li class="fragment">Tax resolvers with logic for all major use cases.</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h4>EU Tax Resolver</h4>
+                        <pre><code>
+use CommerceGuys\Tax\Repository\TaxTypeRepository;
+use CommerceGuys\Tax\Resolver\Engine\TaxTypeResolverEngine;
+use CommerceGuys\Tax\Resolver\Engine\TaxRateResolverEngine;
+use CommerceGuys\Tax\Resolver\TaxType\EuTaxTypeResolver;
+use CommerceGuys\Tax\Resolver\TaxRate\DefaultTaxRateResolver;
+use CommerceGuys\Tax\Resolver\TaxResolver;
+
+$taxTypeRepository = new TaxTypeRepository();
+$taxTypeResolverEngine = new TaxTypeResolverEngine();
+$taxTypeResolverEngine->add(new EuTaxTypeResolver($taxTypeRepository));
+$taxRateResolverEngine = new TaxRateResolverEngine();
+$taxRateResolverEngine->add(new DefaultTaxRateResolver());
+$resolver = new TaxResolver($taxTypeResolverEngine, $taxRateResolverEngine);
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h4>Calculates the VAT rate based on</h4>
+                        <ul>
+                            <li>Goods or Services</li>
+                            <li>Type of service, digital, education</li>
+                            <li>B2C or B2B</li>
+                            <li>Supplier location</li>
+                            <li>Customer Location</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h4>Full Data inc. Historic Rates</h4>
+                        <pre><code>
+{
+"name": "British VAT",
+"zone": "gb_vat",
+"tag": "EU",
+"rates": [
+    {
+    "id": "gb_vat_standard",
+    "name": "Standard",
+    "display_name": "% VAT",
+    "default": true,
+    "amounts": [
+    {
+        "id": "gb_vat_standard_1991",
+        "amount": 0.175,
+        "start_date": "1991-03-19",
+        "end_date": "2008-11-30"
+        },
+                        </code></pre>
+                    </section>
+
+                    <!-- Trending Developer -->
+                    <section>
+                        <h2>We're doing something right...</h2>
+                        <img src="assets/images/trending-developer.png" />
+                    </section>
+
+                </section>
+
+                <section>
+                    <section>
+                        <img src="assets/images/dc.png" style="border: 0; padding: 15px;"  />
+                        <h2>Drupal Commerce 2.x</h2>
+                    </section>
+
+                    <section>
+                        <h3>Drupal Commerce 2.x Sprint</h3>
+                        <img src="assets/images/paris-sprint.jpg" class="stretch" />
+                        <p>Validated the architecture with members of SensioLabs, Smile, Publicis Modem, OSInet, i-KOS, Adyax, Ekino, and others.</p>
+                    </section>
+                    <section>
+                        <h3>Once again, we start from scratch</h3>
+                        <pre><code class="php hljs">
+&lt;?php
+
+namespace Drupal\commerce\Entity
+                        </code></pre>
+                    </section>
+                    <section>
+                        <img src="assets/images/commerce-2-ecosystem.png" class="stretch" style="border: 0; padding: 15px; background: #fff;" />
+                    </section>
+                    <section>
+                        <h3>2.x Entity Relationship Model</h3>
+                        <img src="assets/images/commerce-2-erd.png" class="stretch" style="border: 0; padding: 15px; " />
+
+                        <aside class="notes">
+                            New entity relation model
+                        </aside>
+                    </section>
+                    <section>
+                        <h3>Multi-store / Multi-vendor</h3>
+                        <img src="assets/images/multistore.png" style="border:15px; padding: 30px; background: #fff;" />
+                        <aside class="notes">
+                            Marketplace
+                        </aside>
+                    </section>
+                    <section>
+                        <h3>Hierarchical Product Model</h3>
+                        <img src="assets/images/product-tree.png" style="border:0; padding: 15px;"/>
+                        <aside class="notes">
+                            Inheritance
+                        </aside>
+                    </section>
+                    <section>
+                        <h3>Improved Order Workflows</h3>
+                        <img src="assets/images/workflow.png"  class="stretch" style="border:0; padding: 15px;" />
+                    </section>
+                    <section>
+                        <h3>Improved Payment Processing</h3>
+                        <p>Create a "mini" ledger for payments with double entry like accounting features.</p>
+                    </section>
+                    <section data-transition="fade">
+                        <img src="assets/images/payments-auth.png" class="stretch" style="border: 0; padding: 15px;" />
+                        <aside class="notes">
+                            Initially Auth
+                        </aside>
+                    </section>
+                    <section data-transition="fade">
+                        <img src="assets/images/payments-capture.png" class="stretch" style="border: 0; padding: 15px;" />
+                        <aside class="notes">
+                            Capture with an action
+                        </aside>
+                    </section>
+                    <section data-transition="fade">
+                        <img src="assets/images/payments-allocation.png" class="stretch" style="border: 0; padding: 15px;" />
+                        <aside class="notes">
+                            Allocate with an invoice
+                        </aside>
+                    </section>
+                    <section>
+                        <h3>Try it out</h3>
+                        <img src="assets/images/commerce-backoffice.png" class="stretch" style="border:0; padding: 15px;" />
+                    </section>
+                    <section>
+                        <h3><a href="https://github.com/commerceguys/commerce" >Contribute on GitHub</a></h3>
+                        <video class="stretch" data-autoplay src="assets/video/commerce-2.x-commits.webm"></video>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Questions?</h2>
+                    <p>
+                        Office hours: Wednesdays at 1PM GMT<br />
+                        Find us in #drupal-commerce.
+                    </p>
+                </section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
